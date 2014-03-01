@@ -1,4 +1,4 @@
-instagrammy-goodness
+instagramy-goodness
 ====================
 
 Wordpress/Instagram
