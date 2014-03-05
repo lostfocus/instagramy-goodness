@@ -39,9 +39,19 @@ function instagramy_goodness_user(){
         <a href="<?php echo $instaurl ?>"><?php _e("Connect to Instagram.","instagramy_goodness"); ?></a>
     </p>
     <?php if(trim($token) != ""){
-        $username = get_user_option("instagramy_goodness_username");
+        $ig_username = get_user_option("instagramy_goodness_username");
+        $ig_userid = get_user_option("instagramy_goodness_id");
     ?>
-    <p><?php printf(__("Good job! Instagram said your name is <em>%s</em>.","instagramy_goodness"),$username);?></p>
+    <p><?php printf(__("Good job! Instagram said your name is <em>%s</em>.","instagramy_goodness"),$ig_username);?></p>
+    <?php
+        $ig = new instagramy_goodness();
+        $ig->setToken($token);
+        $ig->setUserId($ig_userid);
+        $lastpicture = $ig->getLastPicture(true);
+        $shortcode = explode("/",$lastpicture->link);
+        $shortcode = $shortcode[4];
+    ?>
+        <iframe src="//instagram.com/p/<?php echo $shortcode; ?>/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
     <? } ?>
 </div>
 <?php

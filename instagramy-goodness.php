@@ -29,6 +29,7 @@ define('IG_PATH', plugin_dir_path(__FILE__));
 define('IG_URL', plugin_dir_url(__FILE__));
 
 require_once(IG_PATH."helpers.php");
+require_once(IG_PATH."instagramy_goodness.class.php");
 require_once(IG_PATH."menu/admin.php");
 require_once(IG_PATH."menu/user.php");
 
