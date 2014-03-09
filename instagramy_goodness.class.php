@@ -25,14 +25,26 @@ class instagramy_goodness {
     }
 
     public function getLastPicture($cached = true){
-        $feed = $this->getOwnMedia($cached);
+        $feed = $this->getOwnMedia(1, 0, $cached);
         return $feed->data[0];
     }
-    public function getOwnMedia($cached = true){
-        $tkey = "ownmedia-".md5("ownmedia".$this->token);
-        $feed = unserialize(get_transient($tkey));
+    public function getOwnMedia($count = 0, $min_timestamp = 0, $cached = true){
+        $tkey = "ownmedia-".md5("ownmedia".$this->token.$count.$min_timestamp);
+        $t = get_transient($tkey);
+        if(!is_object($t)){
+            $feed = unserialize($t);
+        } else {
+            $feed = $t;
+        }
         if(!$feed){
-            $feed = $this->callApi("/users/self/media/recent",array("access_token" => $this->token));
+            $options = array("access_token" => $this->token);
+            if($count > 0){
+                $options["count"] = $count;
+            }
+            if($min_timestamp > 0){
+                $options['min_timestamp'] = $min_timestamp;
+            }
+            $feed = $this->callApi("/users/self/media/recent",$options);
             set_transient($tkey,$feed,MINUTE_IN_SECONDS);
         }
         return $feed;

@@ -53,8 +53,68 @@ function instagramy_goodness_menues(){
     }
 }
 
+function instagramy_goodness_create_simple_post($userid){
+    $token = get_user_option("instagramy_goodness_token",$userid);
+    $ig_userid = get_user_option("instagramy_goodness_id",$userid);
+    $lastpost = get_user_option("instagramy_goodness_lastpost",$userid);
+    $user = get_userdata($userid);
+    if(!$lastpost){
+        $lastpost = time() - WEEK_IN_SECONDS;
+    } elseif($lastpost > (time() - WEEK_IN_SECONDS + 60)){
+        return false;
+    }
+    $lastpost += 1;
+    $lastpicturetime = 0;
+    if(!$token || !$ig_userid){
+        return false; // goto fail;
+    }
+    $ig = new instagramy_goodness();
+    $ig->setToken($token);
+    $ig->setUserId($ig_userid);
+    $pictures = $ig->getOwnMedia(10, $lastpost);
+    $images = array();
+    foreach($pictures->data as $picture){
+        if($picture->created_time > $lastpicturetime){
+            $lastpicturetime = $picture->created_time;
+        }
+        $shortcode = explode("/",$picture->link);
+        $shortcode = $shortcode[4];
+        $images[] = '<iframe src="//instagram.com/p/'.$shortcode.'/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
+        ?>
+    <?php
+    }
+    if(count($images) > 0){
+        $post = array(
+            "post_content" => implode("\n\n",$images),
+            "post_title" =>  "Instagramy Goodness",
+            "post_status"   =>  "draft",
+            "post_author"   =>  $userid
+        );
+        $postid = wp_insert_post( $post);
+        if($postid > 0){
+            update_user_option($userid,"instagramy_goodness_lastpost",$lastpicturetime,true);
+            wp_mail($user->get("user_email"),__("New instagramy goodness post"),__("yolo"));
+        }
+    }
+}
+
+function instagramy_goodness_create_all_the_posts(){
+    $users = get_users();
+    foreach($users as $user){
+        instagramy_goodness_create_simple_post($user->ID);
+    }
+}
+
+function instagramy_goodness_setup_schedule() {
+    if ( ! wp_next_scheduled( 'instagramy_goodness_hourly_event' ) ) {
+        wp_schedule_event( time(), 'hourly', 'instagramy_goodness_hourly_event');
+    }
+}
+
 /*
  * Hooks
  */
 
 add_action( 'admin_menu', 'instagramy_goodness_menues' );
+add_action( 'wp', 'instagramy_goodness_setup_schedule' );
+add_action( 'instagramy_goodness_hourly_event', 'instagramy_goodness_create_all_the_posts' );
