@@ -94,6 +94,21 @@ function instagramy_goodness_create_simple_post($userid){
         $postid = wp_insert_post( $post);
         if($postid > 0){
             update_user_option($userid,"instagramy_goodness_lastpost",$lastpicturetime,true);
+            $text = "";
+            foreach($pictures->data as $picture){
+                $imgtag = media_sideload_image($picture->images->standard_resolution->url, $postid, $picture->caption->text);
+                if(!is_a($imgtag,"WP_Error")){
+                    $text .= $imgtag . "\n\n";
+                }
+            }
+            $post = array(
+                "post_content" => $text,
+                "post_title" =>  "Instagramy Goodness",
+                "post_status"   =>  "draft",
+                "post_author"   =>  $userid,
+                "ID"    => $postid
+            );
+            wp_insert_post( $post);
             wp_mail($user->get("user_email"),__("New instagramy goodness post"),$post["post_content"]);
         }
     }
