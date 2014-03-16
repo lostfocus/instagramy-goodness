@@ -79,7 +79,8 @@ function instagramy_goodness_create_simple_post($userid){
         }
         $shortcode = explode("/",$picture->link);
         $shortcode = $shortcode[4];
-        $images[] = '<iframe src="//instagram.com/p/'.$shortcode.'/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
+        // $images[] = '<iframe src="//instagram.com/p/'.$shortcode.'/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
+        $images[] = $picture->link;
         ?>
     <?php
     }
@@ -93,7 +94,7 @@ function instagramy_goodness_create_simple_post($userid){
         $postid = wp_insert_post( $post);
         if($postid > 0){
             update_user_option($userid,"instagramy_goodness_lastpost",$lastpicturetime,true);
-            wp_mail($user->get("user_email"),__("New instagramy goodness post"),__("yolo"));
+            wp_mail($user->get("user_email"),__("New instagramy goodness post"),$post["post_content"]);
         }
     }
 }
