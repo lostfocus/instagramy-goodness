@@ -54,6 +54,7 @@ function instagramy_goodness_menues(){
 }
 
 function instagramy_goodness_create_simple_post($userid){
+    global $wp_version;
     $token = get_user_option("instagramy_goodness_token",$userid);
     $ig_userid = get_user_option("instagramy_goodness_id",$userid);
     $lastpost = get_user_option("instagramy_goodness_lastpost",$userid);
@@ -98,7 +99,11 @@ function instagramy_goodness_create_simple_post($userid){
             foreach($pictures->data as $picture){
                 $imgtag = media_sideload_image($picture->images->standard_resolution->url, $postid, $picture->caption->text);
                 if(!is_a($imgtag,"WP_Error")){
-                    $text .= $imgtag . "\n\n";
+                    if(version_compare($wp_version,"3.9") >= 0){
+                        $text .= sprintf("<figure><a href='%s'>%s</a><figcaption>%s</figcaption></figure>",$picture->link,$imgtag,$picture->caption->text) . "\n\n";
+                    } else {
+                        $text .= sprintf("<p><a href='%s'>%s</a></p>",$picture->link,$imgtag) . "\n\n";
+                    }
                 }
             }
             $post = array(
