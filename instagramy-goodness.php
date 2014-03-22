@@ -205,6 +205,9 @@ function instagramy_goodness_create_simple_post($userid){
         "ID"    => $postid
     );
     wp_insert_post( $post);
+    if($featured){
+        update_post_meta($postid,'_thumbnail_id',$featured);
+    }
     wp_mail($user->get("user_email"),__("New instagramy goodness post"),$post["post_content"]);
     update_user_option($userid,"instagramy_goodness_lastpost",$lastpicturetime,true);
 }
