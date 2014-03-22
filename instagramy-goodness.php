@@ -58,16 +58,25 @@ function instagramy_goodness_create_simple_post($userid){
     $token = get_user_option("instagramy_goodness_token",$userid);
     $ig_userid = get_user_option("instagramy_goodness_id",$userid);
 
+    /*
+     * If there is no token or no user id, we just silently fail.
+     */
     if(!$token || !$ig_userid){
         return false; // goto fail;
     }
 
+    /*
+     * Either get the last timestamp OR setting it to one week ago.
+     * This way we have a timestamp somewhere in the past.
+     */
     $lastpost = get_user_option("instagramy_goodness_lastpost",$userid);
-
     if(!$lastpost){
         $lastpost = time() - WEEK_IN_SECONDS;
     }
 
+    /*
+     * Getting the user's day/time setting and comparing it to now.
+     */
     $ig_user_day = get_user_option("instagramy_goodness_day",$userid);
     $ig_user_time = get_user_option("instagramy_goodness_time",$userid);
 
@@ -75,63 +84,129 @@ function instagramy_goodness_create_simple_post($userid){
     $time_now = floor(date("G") / 6);
 
     if(
-        ($ig_user_day != $day_now) &&
-        ($ig_user_time != $time_now) &&
+        ($ig_user_day != $day_now) ||
+        ($ig_user_time != $time_now) ||
         ($lastpost > (time() - DAY_IN_SECONDS))) {
         return false;
     }
 
     $user = get_userdata($userid);
+
+    // Set this plus one second, just to be sure.
+    // It happened.
     $lastpost += 1;
+
+    // We will set the time of the youngest picture here
     $lastpicturetime = 0;
+
+    // And here we get the pictures
     $ig = new instagramy_goodness();
     $ig->setToken($token);
     $ig->setUserId($ig_userid);
-    $pictures = $ig->getOwnMedia(10, $lastpost);
+    $pictures = $ig->getOwnMedia(0, $lastpost);
+
+    // If there are no pictures, we can go home
+    if(count($pictures->data) < 1){
+        return false;
+    }
+
+    $ig_user_title = get_user_option("instagramy_goodness_title",$userid);
+
+    // We need to create a post already for the sideload
+    $post = array(
+        "post_content" => "",
+        "post_title" =>  $ig_user_title,
+        "post_status"   =>  "auto-draft",
+        "post_author"   =>  $userid
+    );
+    $postid = wp_insert_post( $post);
+
     $images = array();
+
+    $featured = false;
+    $maxlikes = 0;
+
     foreach($pictures->data as $picture){
-        if($picture->created_time > $lastpicturetime){
-            $lastpicturetime = $picture->created_time;
-        }
-        $shortcode = explode("/",$picture->link);
-        $shortcode = $shortcode[4];
-        // $images[] = '<iframe src="//instagram.com/p/'.$shortcode.'/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
-        $images[] = $picture->link;
-        ?>
-    <?php
-    }
-    if(count($images) > 0){
-        $post = array(
-            "post_content" => implode("\n\n",$images),
-            "post_title" =>  "Instagramy Goodness",
-            "post_status"   =>  "draft",
-            "post_author"   =>  $userid
-        );
-        $postid = wp_insert_post( $post);
-        if($postid > 0){
-            update_user_option($userid,"instagramy_goodness_lastpost",$lastpicturetime,true);
-            $text = "";
-            foreach($pictures->data as $picture){
-                $imgtag = media_sideload_image($picture->images->standard_resolution->url, $postid, $picture->caption->text);
-                if(!is_a($imgtag,"WP_Error")){
-                    if(version_compare($wp_version,"3.9") >= 0){
-                        $text .= sprintf("<figure><a href='%s'>%s</a><figcaption>%s</figcaption></figure>",$picture->link,$imgtag,$picture->caption->text) . "\n\n";
-                    } else {
-                        $text .= sprintf("<p><a href='%s'>%s</a></p>",$picture->link,$imgtag) . "\n\n";
-                    }
-                }
+        $sideload_id = instagramy_goodness_sideload_image($picture->images->standard_resolution->url, $postid, $picture->caption->text);
+        if(!is_wp_error($sideload_id)){
+            if($picture->created_time > $lastpicturetime){
+                $lastpicturetime = $picture->created_time;
             }
-            $post = array(
-                "post_content" => $text,
-                "post_title" =>  "Instagramy Goodness",
-                "post_status"   =>  "draft",
-                "post_author"   =>  $userid,
-                "ID"    => $postid
+            if($picture->likes->count > $maxlikes){
+                $maxlikes = $picture->likes->count;
+                $featured = $sideload_id;
+            }
+            // Let's just pray Instagram doesn't change their urls.
+            $shortcode = explode("/",$picture->link);
+            $shortcode = $shortcode[4];
+            $image = array(
+                "id"    => $sideload_id,
+                "title" =>  $picture->caption->text,
+                "link"  =>  $picture->link,
+                "shortcode" => $shortcode,
+                "likes" =>  $picture->likes->count
             );
-            wp_insert_post( $post);
-            wp_mail($user->get("user_email"),__("New instagramy goodness post"),$post["post_content"]);
+            $images[] = $image;
         }
     }
+
+    if(count($images) < 1) {
+        return false; // this happens when there are errors with the sideloading. Uhm.
+    }
+
+    //
+    $ig_user_format = get_user_option("instagramy_goodness_format",$userid);
+    if(!$ig_user_format){
+        $ig_user_format = "gallery";
+    }
+
+    $content = "";
+
+    switch($ig_user_format){
+        case 'gallery':
+            $content = "[gallery]";
+            break;
+        case 'embed':
+            $frames = array();
+            foreach($images as $image){
+                $frames[] = sprintf('<iframe src="//instagram.com/p/%s/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>',$image['shortcode']);
+            }
+            $content = implode("\n\n",$frames);
+            break;
+        default:
+            $img = array();
+            foreach($images as $image){
+                $src = wp_get_attachment_url( $image['id'] );
+                $alt = isset($image['title']) ? esc_attr($image['title']) : '';
+                if(version_compare($wp_version,"3.9") >= 0){
+                    $html = sprintf('<figure><a href="%s"><img src="%s" alt="%s"></a>',$image['link'],$src,$alt);
+                    if($alt != ''){
+                        $html .= sprintf("<figcaption>%s</figcaption>",$alt);
+                    }
+                    $html .= '</figure>';
+                } else {
+                    $html = sprintf('<p><a href="%s"><img src="%s" alt="%s"></a>',$image['link'],$src,$alt);
+                    if($alt != ''){
+                        $html .= '<br>'.$alt;
+                    }
+                    $html .= '</p>';
+                }
+
+
+                $img[] = $html;
+            }
+            $content = implode("\n\n",$img);
+    }
+    $post = array(
+        "post_content" => $content,
+        "post_title" =>  $ig_user_title,
+        "post_status"   =>  "draft",
+        "post_author"   =>  $userid,
+        "ID"    => $postid
+    );
+    wp_insert_post( $post);
+    wp_mail($user->get("user_email"),__("New instagramy goodness post"),$post["post_content"]);
+    update_user_option($userid,"instagramy_goodness_lastpost",$lastpicturetime,true);
 }
 
 function instagramy_goodness_create_all_the_posts(){
