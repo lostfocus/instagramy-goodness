@@ -65,7 +65,7 @@ function instagramy_goodness_user(){
         <select name="format">
             <option value="gallery"<?php if($ig_user_format == "gallery") echo "selected"; ?>><? _e("Gallery","instagramy_goodness"); ?></option>
             <option value="images"<?php if($ig_user_format == "images") echo "selected"; ?>><? _e("Image list","instagramy_goodness"); ?></option>
-            <option value="embed"<?php if($ig_user_format == "embed") echo "selected"; ?>><? _e("Embeds","instagramy_goodness"); ?></option>
+            <!-- <option value="embed"<?php if($ig_user_format == "embed") echo "selected"; ?>><? _e("Embeds","instagramy_goodness"); ?></option> -->
         </select>
         <h3><?php _e("Post times","instagramy_goodness");?></h3>
         <table class='form-table'>
