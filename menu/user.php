@@ -21,11 +21,13 @@ function instagramy_goodness_user(){
         check_admin_referer( 'ig_settings_'.$user->ID );
         $ig_user_day_post = sanitize_key((int)$_POST['day']);
         $ig_user_time_post = sanitize_key((int)$_POST['time']);
+        $ig_user_format_post = sanitize_key($_POST['format']);
+        $ig_user_title_post = sanitize_text_field($_POST['title']);
         update_user_option($user->ID,"instagramy_goodness_day",$ig_user_day_post, true);
         update_user_option($user->ID,"instagramy_goodness_time",$ig_user_time_post, true);
+        update_user_option($user->ID,"instagramy_goodness_format",$ig_user_format_post, true);
+        update_user_option($user->ID,"instagramy_goodness_title",$ig_user_title_post, true);
     }
-    $ig_user_day = get_user_option("instagramy_goodness_day");
-    $ig_user_time = get_user_option("instagramy_goodness_time");
     $token = get_user_option("instagramy_goodness_token");
     ?>
 <div class="wrap">
@@ -49,11 +51,23 @@ function instagramy_goodness_user(){
     </p>
     <?php if(trim($token) != ""){
         $ig_username = get_user_option("instagramy_goodness_username");
-        $ig_userid = get_user_option("instagramy_goodness_id");
-    ?>
+        $ig_user_day = get_user_option("instagramy_goodness_day");
+        $ig_user_time = get_user_option("instagramy_goodness_time");
+        $ig_user_format = get_user_option("instagramy_goodness_format");
+        $ig_user_title = get_user_option("instagramy_goodness_title");
+        ?>
     <p><?php printf(__("Good job! Instagram said your name is <em>%s</em>.","instagramy_goodness"),$ig_username);?></p>
-    <h2><? _e("Settings");?></h2>
+    <h2><?php _e("Settings");?></h2>
     <form method="post">
+        <h3><?php _e("Title");?></h3>
+        <input type="text" name="title" value="<?php echo ($ig_user_title) ? $ig_user_title : "Instagramy Goodness"; ?>">
+        <h3><?php _e("Format");?></h3>
+        <select name="format">
+            <option value="gallery"<?php if($ig_user_format == "gallery") echo "selected"; ?>><? _e("Gallery","instagramy_goodness"); ?></option>
+            <option value="images"<?php if($ig_user_format == "images") echo "selected"; ?>><? _e("Image list","instagramy_goodness"); ?></option>
+            <option value="embed"<?php if($ig_user_format == "embed") echo "selected"; ?>><? _e("Embeds","instagramy_goodness"); ?></option>
+        </select>
+        <h3><?php _e("Post times","instagramy_goodness");?></h3>
         <table class='form-table'>
             <tr>
                 <th scope='row'><?php _e("Post day","instagramy_goodness"); ?>:</th>
@@ -73,10 +87,10 @@ function instagramy_goodness_user(){
                 <th scope='row'><?php _e("Post time","instagramy_goodness"); ?>:</th>
                 <td>
                     <select name="time">
-                        <option value="1"<?php if((int)$ig_user_time == 0) echo "selected"; ?>><? _e("Early morning","instagramy_goodness"); ?></option>
-                        <option value="2"<?php if((int)$ig_user_time == 1) echo "selected"; ?>><? _e("During the day","instagramy_goodness"); ?></option>
-                        <option value="3"<?php if((int)$ig_user_time == 2) echo "selected"; ?>><? _e("In the afternoon","instagramy_goodness"); ?></option>
-                        <option value="0"<?php if((int)$ig_user_time == 3) echo "selected"; ?>><? _e("During the evening","instagramy_goodness"); ?></option>
+                        <option value="0"<?php if((int)$ig_user_time == 0) echo "selected"; ?>><? _e("Early morning","instagramy_goodness"); ?></option>
+                        <option value="1"<?php if((int)$ig_user_time == 1) echo "selected"; ?>><? _e("During the day","instagramy_goodness"); ?></option>
+                        <option value="2"<?php if((int)$ig_user_time == 2) echo "selected"; ?>><? _e("In the afternoon","instagramy_goodness"); ?></option>
+                        <option value="3"<?php if((int)$ig_user_time == 3) echo "selected"; ?>><? _e("During the evening","instagramy_goodness"); ?></option>
                     </select>
                 </td>
             </tr>
