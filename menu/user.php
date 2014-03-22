@@ -73,10 +73,10 @@ function instagramy_goodness_user(){
                 <th scope='row'><?php _e("Post time","instagramy_goodness"); ?>:</th>
                 <td>
                     <select name="time">
-                        <option value="1"<?php if((int)$ig_user_time == 1) echo "selected"; ?>><? _e("Early morning","instagramy_goodness"); ?></option>
-                        <option value="2"<?php if((int)$ig_user_time == 2) echo "selected"; ?>><? _e("During the day","instagramy_goodness"); ?></option>
-                        <option value="3"<?php if((int)$ig_user_time == 3) echo "selected"; ?>><? _e("In the evening","instagramy_goodness"); ?></option>
-                        <option value="0"<?php if((int)$ig_user_time == 0) echo "selected"; ?>><? _e("At night","instagramy_goodness"); ?></option>
+                        <option value="1"<?php if((int)$ig_user_time == 0) echo "selected"; ?>><? _e("Early morning","instagramy_goodness"); ?></option>
+                        <option value="2"<?php if((int)$ig_user_time == 1) echo "selected"; ?>><? _e("During the day","instagramy_goodness"); ?></option>
+                        <option value="3"<?php if((int)$ig_user_time == 2) echo "selected"; ?>><? _e("In the afternoon","instagramy_goodness"); ?></option>
+                        <option value="0"<?php if((int)$ig_user_time == 3) echo "selected"; ?>><? _e("During the evening","instagramy_goodness"); ?></option>
                     </select>
                 </td>
             </tr>

@@ -57,18 +57,33 @@ function instagramy_goodness_create_simple_post($userid){
     global $wp_version;
     $token = get_user_option("instagramy_goodness_token",$userid);
     $ig_userid = get_user_option("instagramy_goodness_id",$userid);
-    $lastpost = get_user_option("instagramy_goodness_lastpost",$userid);
-    $user = get_userdata($userid);
-    if(!$lastpost){
-        $lastpost = time() - WEEK_IN_SECONDS;
-    } elseif($lastpost > (time() - WEEK_IN_SECONDS + 60)){
-        return false;
-    }
-    $lastpost += 1;
-    $lastpicturetime = 0;
+
     if(!$token || !$ig_userid){
         return false; // goto fail;
     }
+
+    $lastpost = get_user_option("instagramy_goodness_lastpost",$userid);
+
+    if(!$lastpost){
+        $lastpost = time() - WEEK_IN_SECONDS;
+    }
+
+    $ig_user_day = get_user_option("instagramy_goodness_day",$userid);
+    $ig_user_time = get_user_option("instagramy_goodness_time",$userid);
+
+    $day_now = date("w");
+    $time_now = floor(date("G") / 6);
+
+    if(
+        ($ig_user_day != $day_now) &&
+        ($ig_user_time != $time_now) &&
+        ($lastpost > (time() - DAY_IN_SECONDS))) {
+        return false;
+    }
+
+    $user = get_userdata($userid);
+    $lastpost += 1;
+    $lastpicturetime = 0;
     $ig = new instagramy_goodness();
     $ig->setToken($token);
     $ig->setUserId($ig_userid);
