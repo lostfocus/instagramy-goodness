@@ -2,7 +2,7 @@
 /*
 Plugin Name: Instagramy Goodness
 Plugin URI: http://lostfocus.de
-Description: Rewrites the image urls to use TimThumb to resize and add whitespace instead of cropping
+Description: Automates an blogpost with your last couple of instagram pictures
 Version: 0.1
 Author: Dominik Schwind
 Author URI: http://lostfocus.de/
@@ -23,7 +23,6 @@ License: GPL2
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
 
 define('IG_PATH', plugin_dir_path(__FILE__));
 define('IG_URL', plugin_dir_url(__FILE__));
@@ -232,3 +231,10 @@ function instagramy_goodness_setup_schedule() {
 add_action( 'admin_menu', 'instagramy_goodness_menues' );
 add_action( 'wp', 'instagramy_goodness_setup_schedule' );
 add_action( 'instagramy_goodness_hourly_event', 'instagramy_goodness_create_all_the_posts' );
+
+/* Load textdomain */
+
+add_action('plugins_loaded', 'instagramy_goodness_textdomain');
+function instagramy_goodness_textdomain() {
+    load_plugin_textdomain('instagramy_goodness', false, dirname(plugin_basename( __FILE__ )).'/lang/');
+}
