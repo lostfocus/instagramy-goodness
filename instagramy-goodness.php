@@ -43,7 +43,7 @@ function instagramy_goodness_menues(){
     );
     $options = get_option('instagramy_goodness');
     if(isset($options['client_id']) && isset($options['client_secret'])) {
-        add_users_page(
+        add_management_page(
             'Instagramy Goodness',
             'Instagramy Goodness',
             'edit_posts',
