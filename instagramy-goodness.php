@@ -54,6 +54,7 @@ function instagramy_goodness_menues(){
 }
 
 function instagramy_goodness_create_simple_post($userid){
+    global $wp_version;
     $token = get_user_option("instagramy_goodness_token",$userid);
     $ig_userid = get_user_option("instagramy_goodness_id",$userid);
     $lastpost = get_user_option("instagramy_goodness_lastpost",$userid);
@@ -79,7 +80,8 @@ function instagramy_goodness_create_simple_post($userid){
         }
         $shortcode = explode("/",$picture->link);
         $shortcode = $shortcode[4];
-        $images[] = '<iframe src="//instagram.com/p/'.$shortcode.'/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
+        // $images[] = '<iframe src="//instagram.com/p/'.$shortcode.'/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
+        $images[] = $picture->link;
         ?>
     <?php
     }
@@ -93,7 +95,26 @@ function instagramy_goodness_create_simple_post($userid){
         $postid = wp_insert_post( $post);
         if($postid > 0){
             update_user_option($userid,"instagramy_goodness_lastpost",$lastpicturetime,true);
-            wp_mail($user->get("user_email"),__("New instagramy goodness post"),__("yolo"));
+            $text = "";
+            foreach($pictures->data as $picture){
+                $imgtag = media_sideload_image($picture->images->standard_resolution->url, $postid, $picture->caption->text);
+                if(!is_a($imgtag,"WP_Error")){
+                    if(version_compare($wp_version,"3.9") >= 0){
+                        $text .= sprintf("<figure><a href='%s'>%s</a><figcaption>%s</figcaption></figure>",$picture->link,$imgtag,$picture->caption->text) . "\n\n";
+                    } else {
+                        $text .= sprintf("<p><a href='%s'>%s</a></p>",$picture->link,$imgtag) . "\n\n";
+                    }
+                }
+            }
+            $post = array(
+                "post_content" => $text,
+                "post_title" =>  "Instagramy Goodness",
+                "post_status"   =>  "draft",
+                "post_author"   =>  $userid,
+                "ID"    => $postid
+            );
+            wp_insert_post( $post);
+            wp_mail($user->get("user_email"),__("New instagramy goodness post"),$post["post_content"]);
         }
     }
 }
