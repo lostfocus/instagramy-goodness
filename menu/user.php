@@ -17,6 +17,15 @@ function instagramy_goodness_user(){
         update_user_option($user->ID,"instagramy_goodness_id",$tokendata->user->id,true);
         update_user_option($user->ID,"instagramy_goodness_username",$tokendata->user->username,true);
     }
+    if(isset($_POST['submit'])){
+        check_admin_referer( 'ig_settings_'.$user->ID );
+        $ig_user_day_post = sanitize_key((int)$_POST['day']);
+        $ig_user_time_post = sanitize_key((int)$_POST['time']);
+        update_user_option($user->ID,"instagramy_goodness_day",$ig_user_day_post, true);
+        update_user_option($user->ID,"instagramy_goodness_time",$ig_user_time_post, true);
+    }
+    $ig_user_day = get_user_option("instagramy_goodness_day");
+    $ig_user_time = get_user_option("instagramy_goodness_time");
     $token = get_user_option("instagramy_goodness_token");
     ?>
 <div class="wrap">
@@ -43,6 +52,38 @@ function instagramy_goodness_user(){
         $ig_userid = get_user_option("instagramy_goodness_id");
     ?>
     <p><?php printf(__("Good job! Instagram said your name is <em>%s</em>.","instagramy_goodness"),$ig_username);?></p>
+    <h2><? _e("Settings");?></h2>
+    <form method="post">
+        <table class='form-table'>
+            <tr>
+                <th scope='row'><?php _e("Post day","instagramy_goodness"); ?>:</th>
+                <td>
+                    <select name="day">
+                        <option value="1"<?php if((int)$ig_user_day == 1) echo "selected"; ?>><? _e("Monday"); ?></option>
+                        <option value="2"<?php if((int)$ig_user_day == 2) echo "selected"; ?>><? _e("Tuesday"); ?></option>
+                        <option value="3"<?php if((int)$ig_user_day == 3) echo "selected"; ?>><? _e("Wednesday"); ?></option>
+                        <option value="4"<?php if((int)$ig_user_day == 4) echo "selected"; ?>><? _e("Thursday"); ?></option>
+                        <option value="5"<?php if((int)$ig_user_day == 5) echo "selected"; ?>><? _e("Friday"); ?></option>
+                        <option value="6"<?php if((int)$ig_user_day == 6) echo "selected"; ?>><? _e("Saturday"); ?></option>
+                        <option value="0"<?php if((int)$ig_user_day == 0) echo "selected"; ?>><? _e("Sunday"); ?></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th scope='row'><?php _e("Post time","instagramy_goodness"); ?>:</th>
+                <td>
+                    <select name="time">
+                        <option value="1"<?php if((int)$ig_user_time == 1) echo "selected"; ?>><? _e("Early morning","instagramy_goodness"); ?></option>
+                        <option value="2"<?php if((int)$ig_user_time == 2) echo "selected"; ?>><? _e("During the day","instagramy_goodness"); ?></option>
+                        <option value="3"<?php if((int)$ig_user_time == 3) echo "selected"; ?>><? _e("In the evening","instagramy_goodness"); ?></option>
+                        <option value="0"<?php if((int)$ig_user_time == 0) echo "selected"; ?>><? _e("At night","instagramy_goodness"); ?></option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <?php wp_nonce_field( 'ig_settings_'.$user->ID ); ?>
+        <?php submit_button('Update'); ?>
+    </form>
     <?php
     } ?>
 </div>
