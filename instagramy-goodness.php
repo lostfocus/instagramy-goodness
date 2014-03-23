@@ -145,6 +145,9 @@ function instagramy_goodness_create_simple_post($userid){
                 "shortcode" => $shortcode,
                 "likes" =>  $picture->likes->count
             );
+            $post = get_post($image['id']);
+            $post->post_content = sprintf('<a href="%s">Instagram</a>',$picture->link);
+            wp_update_post($post);
             $images[] = $image;
         }
     }
