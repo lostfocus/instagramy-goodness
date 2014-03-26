@@ -210,7 +210,11 @@ function instagramy_goodness_create_simple_post($userid){
     if($featured){
         update_post_meta($postid,'_thumbnail_id',$featured);
     }
-    wp_mail($user->get("user_email"),__("New instagramy goodness post"),$post["post_content"]);
+    $url = (isset($_SERVER["HTTPS"]) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . "/wp-admin/post.php?post=".$postid."&action=edit";
+
+    $content = sprintf(__("You can edit and post it here:\n\n%s","instagramy_goodness"),$url);
+
+    wp_mail($user->get("user_email"),__("New instagramy goodness post","instagramy_goodness"),$content);
     update_user_option($userid,"instagramy_goodness_lastpost",$lastpicturetime,true);
 }
 
