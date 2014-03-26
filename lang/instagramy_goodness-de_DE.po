@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Instagramy Goodness\n"
-"POT-Creation-Date: 2014-03-23 00:22+0100\n"
-"PO-Revision-Date: 2014-03-23 00:32+0100\n"
+"POT-Creation-Date: 2014-03-26 19:32+0100\n"
+"PO-Revision-Date: 2014-03-26 19:32+0100\n"
 "Last-Translator: Dominik Schwind <dschwind@lostfocus.de>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -16,7 +16,18 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: ../menu\n"
 
-#: ../instagramy-goodness.php:210
+#: ../instagramy-goodness.php:215
+#, php-format
+msgid ""
+"You can edit and post it here:\n"
+"\n"
+"%s"
+msgstr ""
+"Du kannst den Post hier aktualisieren und veröffentlichen:\n"
+"\n"
+"%s"
+
+#: ../instagramy-goodness.php:217
 msgid "New instagramy goodness post"
 msgstr "Neuer Instagramy Goodness Post"
 
