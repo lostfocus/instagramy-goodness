@@ -167,6 +167,7 @@ function instagramy_goodness_create_simple_post($userid){
     switch($ig_user_format){
         case 'gallery':
             $content = "[gallery]";
+            set_post_format($postid, 'gallery' );
             break;
         case 'embed':
             $frames = array();
