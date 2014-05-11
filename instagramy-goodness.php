@@ -243,24 +243,6 @@ add_action( 'admin_menu', 'instagramy_goodness_menues' );
 add_action( 'wp', 'instagramy_goodness_setup_schedule' );
 add_action( 'instagramy_goodness_hourly_event', 'instagramy_goodness_create_all_the_posts' );
 
-/*
- * Making sure we can use the Instagram oEmbed.
- *
- * This is necessary because Instagram returns a broken image if the
- * requested dimensions are smaller than 613px.
- */
-function instagramy_goodness_embed_defaults($dimensions){
-    if(isset($dimensions['width']) && ($dimensions['width'] < 613)){
-        $dimensions['width'] = 613;
-    }
-    if(isset($dimensions['height']) && ($dimensions['height'] < 613)){
-        $dimensions['height'] = 613;
-    }
-    return $dimensions;
-}
-
-add_filter('embed_defaults', 'instagramy_goodness_embed_defaults',10,1);
-
 /* Load textdomain */
 
 add_action('plugins_loaded', 'instagramy_goodness_textdomain');
