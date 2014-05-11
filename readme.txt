@@ -3,7 +3,7 @@ Contributors: dominik.schwind
 Tags: instagram
 Requires at least: 3.6
 Tested up to: 3.9
-Stable tag: 0.1
+Stable tag: 0.2
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,5 +22,8 @@ This also works for blogs with multiple authors.
 * Once this is done, every author (including yourself, obviously), will have a new entry in the "Tools" menu - here you connect your blog to Instagram and change some display settings.
 
 == Changelog ==
+= 0.2 =
+Preview and "post now" button.
+
 = 0.1 =
 First public version.

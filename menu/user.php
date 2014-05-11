@@ -27,9 +27,15 @@ function instagramy_goodness_user(){
         update_user_option($user->ID,"instagramy_goodness_time",$ig_user_time_post, true);
         update_user_option($user->ID,"instagramy_goodness_format",$ig_user_format_post, true);
         update_user_option($user->ID,"instagramy_goodness_title",$ig_user_title_post, true);
+	    ?>
+	    <div id="message" class="updated"><p><?php _e('Settings saved.');?></p></div>
+        <?php
     } elseif(isset($_POST['submit']) && ($_POST['ig_form'] === 'createpost')){
 	    check_admin_referer( 'ig_settings_'.$user->ID );
 	    instagramy_goodness_create_simple_post( $user->ID, false );
+	    ?>
+	    <div id="message" class="updated"><p><?php _e('Draft created.',"instagramy_goodness");?></p></div>
+	    <?php
     }
     $token = get_user_option("instagramy_goodness_token");
     ?>
@@ -74,7 +80,7 @@ function instagramy_goodness_user(){
     // And here we get the pictures
     $ig = new instagramy_goodness();
     $ig->setToken($token);
-    $ig->setUserId($ig_userid);
+    $ig->setUserId($user->ID);
     $pictures = $ig->getOwnMedia(0, $lastpost);
 	if(count($pictures->data) < 1){
 		echo "<p>".__("You have no images for the next post.",'instagramy_goodness')."</p>";
