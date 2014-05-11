@@ -136,11 +136,11 @@ function instagramy_goodness_user(){
     <?php
     } ?>
 	<?php if(count($pictures->data) > 0 ){?>
-	<h2>Post now</h2>
+	<h2><?php _e("Post now!","instagramy_goodness"); ?></h2>
 		<form method="post">
 			<input type="hidden" name="ig_form" value="createpost">
 			<?php wp_nonce_field( 'ig_settings_'.$user->ID ); ?>
-			<?php submit_button('Post now!'); ?>
+			<?php submit_button(__("Post now!","instagramy_goodness")); ?>
 		</form>
 	<?php } ?>
 </div>
