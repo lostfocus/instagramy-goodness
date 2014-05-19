@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Instagramy Goodness\n"
-"POT-Creation-Date: 2014-05-11 19:59+0100\n"
-"PO-Revision-Date: 2014-05-11 20:00+0100\n"
+"POT-Creation-Date: 2014-05-19 22:21+0100\n"
+"PO-Revision-Date: 2014-05-19 22:22+0100\n"
 "Last-Translator: Dominik Schwind <dschwind@lostfocus.de>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: ../menu\n"
 
-#: ../instagramy-goodness.php:219
+#: ../instagramy-goodness.php:227
 #, php-format
 msgid ""
 "You can edit and post it here:\n"
@@ -27,7 +27,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../instagramy-goodness.php:221
+#: ../instagramy-goodness.php:229
 msgid "New instagramy goodness post"
 msgstr "Neuer Instagramy Goodness Post"
 
@@ -64,111 +64,136 @@ msgstr ""
 msgid "Settings saved."
 msgstr "Einstellungen gespeichert."
 
-#: ../menu/user.php:37
+#: ../menu/user.php:38
 msgid "Draft created."
 msgstr "Entwurf erstellt."
 
-#: ../menu/user.php:47
+#: ../menu/user.php:43
+msgid "It looks like you are not properly connected to Instagram."
+msgstr "Es gibt Probleme bei der Verbindung zu Instagram."
+
+#: ../menu/user.php:46
+msgid ""
+"There is a problem loading your pictures. This might be an indicator that "
+"this plugin might not be working on your system."
+msgstr ""
+"Es gibt ein Problem dabei, die Bilder von Instagram zu laden. Das könnte ein "
+"Zeichen dafür sein, daß dieses Plugin generell nicht auf Deinem System "
+"funktioniert."
+
+#: ../menu/user.php:49
+msgid "There have been no new pictures since your last post."
+msgstr "Du hast seit dem letzten Post keine neuen Bilder mehr gepostet."
+
+#: ../menu/user.php:52
+msgid "Not now, honey."
+msgstr "Nicht jetzt."
+
+#: ../menu/user.php:55
+msgid "Something went wrong."
+msgstr "Es ist ein Fehler aufgetreten."
+
+#: ../menu/user.php:70
 msgid "You should probably not be here."
 msgstr "Du solltest eigentlich gar nicht hier sein."
 
-#: ../menu/user.php:59
+#: ../menu/user.php:82
 msgid "Connect to Instagram."
 msgstr "Verbinde Dich hier mit Instagram."
 
-#: ../menu/user.php:68
+#: ../menu/user.php:91
 #, php-format
 msgid "Good job! Instagram said your name is <em>%s</em>."
 msgstr "Gut gemacht! Instagram sagt, daß Du <em>%s</em> bist."
 
-#: ../menu/user.php:86
+#: ../menu/user.php:109
 msgid "You have no images for the next post."
 msgstr "Du hast keine Bilder für einen neuen Post."
 
-#: ../menu/user.php:88
+#: ../menu/user.php:111
 msgid "Your next post should have these images:"
 msgstr "Dein nächster Post sollte diese Bilder haben:"
 
-#: ../menu/user.php:94
+#: ../menu/user.php:117
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: ../menu/user.php:96
+#: ../menu/user.php:119
 msgid "Title"
 msgstr "Titel"
 
-#: ../menu/user.php:98
+#: ../menu/user.php:121
 msgid "Format"
 msgstr "Format"
 
-#: ../menu/user.php:100
+#: ../menu/user.php:123
 msgid "Gallery"
 msgstr "Galerie"
 
-#: ../menu/user.php:101
+#: ../menu/user.php:124
 msgid "Image list"
 msgstr "Bilderliste"
 
-#: ../menu/user.php:102
+#: ../menu/user.php:125
 msgid "Embeds"
 msgstr "Embeds"
 
-#: ../menu/user.php:104
+#: ../menu/user.php:127
 msgid "Post times"
 msgstr "Post-Zeiten"
 
-#: ../menu/user.php:107
+#: ../menu/user.php:130
 msgid "Post day"
 msgstr "Post-Tag"
 
-#: ../menu/user.php:110
+#: ../menu/user.php:133
 msgid "Monday"
 msgstr "Montag"
 
-#: ../menu/user.php:111
+#: ../menu/user.php:134
 msgid "Tuesday"
 msgstr "Dienstag"
 
-#: ../menu/user.php:112
+#: ../menu/user.php:135
 msgid "Wednesday"
 msgstr "Mittwoch"
 
-#: ../menu/user.php:113
+#: ../menu/user.php:136
 msgid "Thursday"
 msgstr "Donnerstag"
 
-#: ../menu/user.php:114
+#: ../menu/user.php:137
 msgid "Friday"
 msgstr "Freitag"
 
-#: ../menu/user.php:115
+#: ../menu/user.php:138
 msgid "Saturday"
 msgstr "Samstag"
 
-#: ../menu/user.php:116
+#: ../menu/user.php:139
 msgid "Sunday"
 msgstr "Sonntag"
 
-#: ../menu/user.php:121
+#: ../menu/user.php:144
 msgid "Post time"
 msgstr "Post-Zeit"
 
-#: ../menu/user.php:124
+#: ../menu/user.php:147
 msgid "Early morning"
 msgstr "Früher Morgen"
 
-#: ../menu/user.php:125
+#: ../menu/user.php:148
 msgid "During the day"
 msgstr "Vormittags"
 
-#: ../menu/user.php:126
+#: ../menu/user.php:149
 msgid "In the afternoon"
 msgstr "Nachmittags"
 
-#: ../menu/user.php:127
+#: ../menu/user.php:150
 msgid "During the evening"
 msgstr "Abends"
 
-#: ../menu/user.php:139 ../menu/user.php:143
+#: ../menu/user.php:162 ../menu/user.php:166
 msgid "Post now!"
 msgstr "Post erstellen"
