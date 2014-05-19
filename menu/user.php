@@ -32,10 +32,33 @@ function instagramy_goodness_user(){
         <?php
     } elseif(isset($_POST['submit']) && ($_POST['ig_form'] === 'createpost')){
 	    check_admin_referer( 'ig_settings_'.$user->ID );
-	    instagramy_goodness_create_simple_post( $user->ID, false );
-	    ?>
-	    <div id="message" class="updated"><p><?php _e('Draft created.',"instagramy_goodness");?></p></div>
-	    <?php
+	    $createpost_status = instagramy_goodness_create_simple_post( $user->ID, false );
+        if($createpost_status < instagramy_goodness_status::NOTOKEN){
+            ?>
+            <div id="message" class="updated"><p><?php _e('Draft created.',"instagramy_goodness");?></p></div>
+        <?php
+        } else {
+            switch($createpost_status){
+                case instagramy_goodness_status::NOTOKEN:
+                    $message = __("It looks like you are not properly connected to Instagram.","instagramy_goodness");
+                    break;
+                case instagramy_goodness_status::SIDELOADERROR:
+                    $message = __("There is a problem loading your pictures. This might be an indicator that this plugin might not be working on your system.","instagramy_goodness");
+                    break;
+                case instagramy_goodness_status::NOPHOTOS:
+                    $message = __("There have been no new pictures since your last post.","instagramy_goodness");
+                    break;
+                case instagramy_goodness_status::NOTNOW:
+                    $message = __("Not now, honey.","instagramy_goodness");
+                    break;
+                default:
+                    $message = __("Something went wrong.","instagramy_goodness");
+                    break;
+            }
+            ?>
+                <div id="message" class="error"><p><?php echo $message ?></p></div>
+            <?php
+        }
     }
     $token = get_user_option("instagramy_goodness_token");
     ?>

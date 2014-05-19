@@ -39,3 +39,12 @@ function instagramy_goodness_sideload_image($file, $post_id, $desc = null){
         return $id;
     }
 }
+
+class instagramy_goodness_status {
+    const EVERYTHINGOKAY = 0;
+    const NOTOKEN = 1;
+    const NOTNOW = 2;
+    const NOPHOTOS = 3;
+    const SIDELOADERROR = 4;
+
+}
