@@ -3,7 +3,7 @@
 Plugin Name: Instagramy Goodness
 Plugin URI: http://lostfocus.de
 Description: Automates an blogpost with your last couple of instagram pictures
-Version: 0.2.1
+Version: 0.2.2
 Author: Dominik Schwind
 Author URI: http://lostfocus.de/
 License: GPL2
