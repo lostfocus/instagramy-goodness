@@ -92,6 +92,9 @@ function instagramy_goodness_user(){
         $ig_user_format = get_user_option("instagramy_goodness_format");
         $ig_user_linkto = get_user_option("instagramy_goodness_linkto");
         $ig_user_captions = get_user_option("instagramy_goodness_captions");
+        if($ig_user_captions === false){
+            $ig_user_captions = 1;
+        }
         $ig_user_title = get_user_option("instagramy_goodness_title");
         ?>
     <p><?php printf(__("Good job! Instagram said your name is <em>%s</em>.","instagramy_goodness"),$ig_username);?></p>

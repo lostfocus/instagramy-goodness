@@ -193,19 +193,28 @@ function instagramy_goodness_create_simple_post( $userid, $checkdate = true){
             $content = implode("\n\n",$frames);
             break;
         default:
+            $ig_user_linkto = get_user_option("instagramy_goodness_linkto",$userid);
+            if(!$ig_user_linkto){
+                $ig_user_linkto = "instagram";
+            }
+            $ig_user_captions = get_user_option("instagramy_goodness_captions",$userid);
+            if($ig_user_captions === false){
+                $ig_user_captions = 1;
+            }
             $img = array();
             foreach($images as $image){
                 $src = wp_get_attachment_url( $image['id'] );
                 $alt = isset($image['title']) ? esc_attr($image['title']) : '';
+                $link = ($ig_user_linkto == "instagram") ? $image['link'] : $src;
                 if(version_compare($wp_version,"3.9") >= 0){
-                    $html = sprintf('<figure><a href="%s"><img src="%s" alt="%s"></a>',$image['link'],$src,$alt);
-                    if($alt != ''){
+                    $html = sprintf('<figure><a href="%s"><img src="%s" alt="%s"></a>',$link,$src,$alt);
+                    if(($alt != '') && ($ig_user_captions > 0)){
                         $html .= sprintf("<figcaption>%s</figcaption>",$alt);
                     }
                     $html .= '</figure>';
                 } else {
                     $html = sprintf('<p><a href="%s"><img src="%s" alt="%s"></a>',$image['link'],$src,$alt);
-                    if($alt != ''){
+                    if(($alt != '') && ($ig_user_captions > 0)){
                         $html .= '<br>'.$alt;
                     }
                     $html .= '</p>';
