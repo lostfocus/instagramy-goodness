@@ -3,7 +3,7 @@ Contributors: dominik.schwind
 Tags: instagram
 Requires at least: 3.6
 Tested up to: 3.9.1
-Stable tag: 0.2.2
+Stable tag: 0.3
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,11 @@ This also works for blogs with multiple authors.
 * Once this is done, every author (including yourself, obviously), will have a new entry in the "Tools" menu - here you connect your blog to Instagram and change some display settings.
 
 == Changelog ==
+= 0.3 =
+* Added the ability to change the link in the image list setting
+* Added the ability to toggle the caption in the image list setting
+* Removed some notices
+
 = 0.2.2 =
 Fixed a bug with the redirect url
 
