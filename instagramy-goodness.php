@@ -51,6 +51,11 @@ function instagramy_goodness_menues(){
     }
 }
 
+function instagramy_goodness_admin_js($hook){
+    if("tools_page_instagramy_goodness" != $hook) return;
+    wp_enqueue_script( 'instagramy_goodness_admin_js', IG_URL."menu/user.js" );
+}
+
 /**
  * @param $userid
  * @param bool $checkdate
@@ -251,6 +256,7 @@ function instagramy_goodness_setup_schedule() {
 add_action( 'admin_menu', 'instagramy_goodness_menues' );
 add_action( 'wp', 'instagramy_goodness_setup_schedule' );
 add_action( 'instagramy_goodness_hourly_event', 'instagramy_goodness_create_all_the_posts' );
+add_action( 'admin_enqueue_scripts', 'instagramy_goodness_admin_js' );
 
 /* Load textdomain */
 

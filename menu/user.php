@@ -122,11 +122,15 @@ function instagramy_goodness_user(){
         <h3><?php _e("Title");?></h3>
         <input type="text" name="title" value="<?php echo ($ig_user_title) ? $ig_user_title : "Instagramy Goodness"; ?>">
         <h3><?php _e("Format");?></h3>
-        <select name="format">
+        <select name="format" id="ig_format">
             <option value="gallery"<?php if($ig_user_format == "gallery") echo "selected"; ?>><? _e("Gallery","instagramy_goodness"); ?></option>
             <option value="images"<?php if($ig_user_format == "images") echo "selected"; ?>><? _e("Image list","instagramy_goodness"); ?></option>
             <!-- <option value="embed"<?php if($ig_user_format == "embed") echo "selected"; ?>><? _e("Embeds","instagramy_goodness"); ?></option> -->
         </select>
+        <div id="imagelistoptions">
+            <h3><? _e("Image list options","instagramy_goodness"); ?></h3>
+            <p>Yo</p>
+        </div>
         <h3><?php _e("Post times","instagramy_goodness");?></h3>
         <table class='form-table'>
             <tr>
