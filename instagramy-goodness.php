@@ -162,6 +162,9 @@ function instagramy_goodness_create_simple_post( $userid, $checkdate = true){
             $post = get_post($image['id']);
             $post->post_content = sprintf('<a href="%s">Instagram</a>',$picture->link);
             wp_update_post($post);
+
+            add_post_meta($post->ID, "instagram_id", $picture->id, true);
+            add_post_meta($post->ID, "instagram_url", $picture->images->standard_resolution->url, true);
             $images[] = $image;
         } else {
           $status = instagramy_goodness_status::SIDELOADERROR;
