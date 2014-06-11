@@ -110,7 +110,10 @@ function instagramy_goodness_user(){
 	} else {
 		echo "<h3>".__("Your next post should have these images:",'instagramy_goodness')."</h3>";
 		foreach($pictures->data as $picture) {
-			printf("<a href='%s'><img src='%s' alt='%s' title='%s'></a> \n",$picture->link,$picture->images->thumbnail->url,$picture->caption->text,$picture->caption->text);
+            if(isset($picture->link)){
+                $text = isset($picture->caption) ? $picture->caption->text : "";
+                printf("<a href='%s'><img src='%s' alt='%s' title='%s'></a> \n",$picture->link,$picture->images->thumbnail->url,$text,$text);
+            }
 		}
 	}
     ?>
