@@ -140,35 +140,47 @@ function instagramy_goodness_create_simple_post( $userid, $checkdate = true){
     $maxlikes = 0;
 
     foreach($pictures->data as $picture){
-        $sideload_id = instagramy_goodness_sideload_image($picture->images->standard_resolution->url, $postid, $picture->caption->text);
-        if(!is_wp_error($sideload_id)){
-            if($picture->created_time > $lastpicturetime){
-                $lastpicturetime = $picture->created_time;
-            }
-            if($picture->likes->count > $maxlikes){
-                $maxlikes = $picture->likes->count;
-                $featured = $sideload_id;
-            }
-            // Let's just pray Instagram doesn't change their urls.
-            $shortcode = explode("/",$picture->link);
-            $shortcode = $shortcode[4];
-            $image = array(
-                "id"    => $sideload_id,
-                "title" =>  $picture->caption->text,
-                "link"  =>  $picture->link,
-                "shortcode" => $shortcode,
-                "likes" =>  $picture->likes->count
-            );
-            $post = get_post($image['id']);
-            $post->post_content = sprintf('<a href="%s">Instagram</a>',$picture->link);
-            wp_update_post($post);
+		$args = array(
+			'meta_key' => 'instagram_id',
+			'meta_value' => $picture->id,
+			'post_type'	=> 'attachment'
+		);
+		$posts = get_posts($args);
+		if(count($posts) < 1){
+			$pictureTitle = "Instagram #".$picture->id;
+			if(isset($picture->caption) && isset($picture->caption->text)){
+				$pictureTitle = $picture->caption->text;
+			}
+			$sideload_id = instagramy_goodness_sideload_image($picture->images->standard_resolution->url, $postid, $pictureTitle);
+			if(!is_wp_error($sideload_id)){
+				if($picture->created_time > $lastpicturetime){
+					$lastpicturetime = $picture->created_time;
+				}
+				if($picture->likes->count > $maxlikes){
+					$maxlikes = $picture->likes->count;
+					$featured = $sideload_id;
+				}
+				// Let's just pray Instagram doesn't change their urls.
+				$shortcode = explode("/",$picture->link);
+				$shortcode = $shortcode[4];
+				$image = array(
+					"id"    => $sideload_id,
+					"title" =>  $pictureTitle,
+					"link"  =>  $picture->link,
+					"shortcode" => $shortcode,
+					"likes" =>  $picture->likes->count
+				);
+				$post = get_post($image['id']);
+				$post->post_content = sprintf('<a href="%s">Instagram</a>',$picture->link);
+				wp_update_post($post);
 
-            add_post_meta($post->ID, "instagram_id", $picture->id, true);
-            add_post_meta($post->ID, "instagram_url", $picture->images->standard_resolution->url, true);
-            $images[] = $image;
-        } else {
-          $status = instagramy_goodness_status::SIDELOADERROR;
-        }
+				add_post_meta($post->ID, "instagram_id", $picture->id, true);
+				add_post_meta($post->ID, "instagram_url", $picture->images->standard_resolution->url, true);
+				$images[] = $image;
+			} else {
+				$status = instagramy_goodness_status::SIDELOADERROR;
+			}
+		}
     }
 
     if(count($images) < 1) {
