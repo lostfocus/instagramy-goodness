@@ -132,12 +132,12 @@ function instagramy_goodness_user(){
         <input type="text" name="title" value="<?php echo ($ig_user_title) ? $ig_user_title : "Instagramy Goodness"; ?>">
         <h3><?php _e("Format");?></h3>
         <select name="format" id="ig_format">
-            <option value="gallery"<?php if($ig_user_format == "gallery") echo "selected"; ?>><? _e("Gallery","instagramy_goodness"); ?></option>
-            <option value="images"<?php if($ig_user_format == "images") echo "selected"; ?>><? _e("Image list","instagramy_goodness"); ?></option>
-            <!-- <option value="embed"<?php if($ig_user_format == "embed") echo "selected"; ?>><? _e("Embeds","instagramy_goodness"); ?></option> -->
+            <option value="gallery"<?php if($ig_user_format == "gallery") echo "selected"; ?>><?php _e("Gallery","instagramy_goodness"); ?></option>
+            <option value="images"<?php if($ig_user_format == "images") echo "selected"; ?>><?php _e("Image list","instagramy_goodness"); ?></option>
+            <!-- <option value="embed"<?php if($ig_user_format == "embed") echo "selected"; ?>><?php _e("Embeds","instagramy_goodness"); ?></option> -->
         </select>
         <div id="imagelistoptions">
-            <h3><? _e("Image list options","instagramy_goodness"); ?></h3>
+            <h3><?php _e("Image list options","instagramy_goodness"); ?></h3>
             <table class='form-table'>
                 <tr>
                     <th scope='row'><?php _e("Link to","instagramy_goodness"); ?>:</th>
@@ -165,13 +165,13 @@ function instagramy_goodness_user(){
                 <th scope='row'><?php _e("Post day","instagramy_goodness"); ?>:</th>
                 <td>
                     <select name="day">
-                        <option value="1"<?php if((int)$ig_user_day == 1) echo "selected"; ?>><? _e("Monday"); ?></option>
-                        <option value="2"<?php if((int)$ig_user_day == 2) echo "selected"; ?>><? _e("Tuesday"); ?></option>
-                        <option value="3"<?php if((int)$ig_user_day == 3) echo "selected"; ?>><? _e("Wednesday"); ?></option>
-                        <option value="4"<?php if((int)$ig_user_day == 4) echo "selected"; ?>><? _e("Thursday"); ?></option>
-                        <option value="5"<?php if((int)$ig_user_day == 5) echo "selected"; ?>><? _e("Friday"); ?></option>
-                        <option value="6"<?php if((int)$ig_user_day == 6) echo "selected"; ?>><? _e("Saturday"); ?></option>
-                        <option value="0"<?php if((int)$ig_user_day == 0) echo "selected"; ?>><? _e("Sunday"); ?></option>
+                        <option value="1"<?php if((int)$ig_user_day == 1) echo "selected"; ?>><?php _e("Monday"); ?></option>
+                        <option value="2"<?php if((int)$ig_user_day == 2) echo "selected"; ?>><?php _e("Tuesday"); ?></option>
+                        <option value="3"<?php if((int)$ig_user_day == 3) echo "selected"; ?>><?php _e("Wednesday"); ?></option>
+                        <option value="4"<?php if((int)$ig_user_day == 4) echo "selected"; ?>><?php _e("Thursday"); ?></option>
+                        <option value="5"<?php if((int)$ig_user_day == 5) echo "selected"; ?>><?php _e("Friday"); ?></option>
+                        <option value="6"<?php if((int)$ig_user_day == 6) echo "selected"; ?>><?php _e("Saturday"); ?></option>
+                        <option value="0"<?php if((int)$ig_user_day == 0) echo "selected"; ?>><?php _e("Sunday"); ?></option>
                     </select>
                 </td>
             </tr>
@@ -179,10 +179,10 @@ function instagramy_goodness_user(){
                 <th scope='row'><?php _e("Post time","instagramy_goodness"); ?>:</th>
                 <td>
                     <select name="time">
-                        <option value="0"<?php if((int)$ig_user_time == 0) echo "selected"; ?>><? _e("Early morning","instagramy_goodness"); ?></option>
-                        <option value="1"<?php if((int)$ig_user_time == 1) echo "selected"; ?>><? _e("During the day","instagramy_goodness"); ?></option>
-                        <option value="2"<?php if((int)$ig_user_time == 2) echo "selected"; ?>><? _e("In the afternoon","instagramy_goodness"); ?></option>
-                        <option value="3"<?php if((int)$ig_user_time == 3) echo "selected"; ?>><? _e("During the evening","instagramy_goodness"); ?></option>
+                        <option value="0"<?php if((int)$ig_user_time == 0) echo "selected"; ?>><?php _e("Early morning","instagramy_goodness"); ?></option>
+                        <option value="1"<?php if((int)$ig_user_time == 1) echo "selected"; ?>><?php _e("During the day","instagramy_goodness"); ?></option>
+                        <option value="2"<?php if((int)$ig_user_time == 2) echo "selected"; ?>><?php _e("In the afternoon","instagramy_goodness"); ?></option>
+                        <option value="3"<?php if((int)$ig_user_time == 3) echo "selected"; ?>><?php _e("During the evening","instagramy_goodness"); ?></option>
                     </select>
                 </td>
             </tr>
