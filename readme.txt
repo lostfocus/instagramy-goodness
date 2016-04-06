@@ -3,7 +3,7 @@ Contributors: dominik.schwind
 Tags: instagram
 Requires at least: 3.6
 Tested up to: 4.5
-Stable tag: 0.5
+Stable tag: 0.5.2
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
