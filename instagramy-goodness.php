@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Instagramy Goodness
-Plugin URI: http://lostfocus.de
+Plugin URI: https://github.com/lostfocus/instagramy-goodness
 Description: Automates an blogpost with your last couple of instagram pictures
 Version: 0.4
 Author: Dominik Schwind
