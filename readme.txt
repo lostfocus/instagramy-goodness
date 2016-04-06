@@ -3,7 +3,7 @@ Contributors: dominik.schwind
 Tags: instagram
 Requires at least: 3.6
 Tested up to: 4.5
-Stable tag: 0.4
+Stable tag: 0.5
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,10 @@ This also works for blogs with multiple authors.
 * Once this is done, every author (including yourself, obviously), will have a new entry in the "Tools" menu - here you connect your blog to Instagram and change some display settings.
 
 == Changelog ==
+= 0.5 =
+* It is now possible to disconnect single users from Instagram
+* Tested with WordPress 4.5
+
 = 0.4 =
 * Fixed a few bugs
 * Tested with WordPress 4.0
