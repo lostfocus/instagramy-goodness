@@ -193,7 +193,7 @@ function instagramy_goodness_user(){
     </form>
     <?php
     } ?>
-	<?php if(count($pictures->data) > 0 ){?>
+	<?php if(isset($pictures) && isset($pictures->data) && count($pictures->data) > 0 ){?>
 	<h2><?php _e("Post now!","instagramy_goodness"); ?></h2>
 		<form method="post">
 			<input type="hidden" name="ig_form" value="createpost">
