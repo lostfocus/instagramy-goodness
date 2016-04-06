@@ -23,7 +23,7 @@ This also works for blogs with multiple authors.
 
 == Changelog ==
 = 0.5 =
-* It is now possible to disconnect single users from Instagram
+* It is now possible to disconnect single users from Instagram (Thanks, [tomwi](https://wordpress.org/support/profile/tomwi))
 * Tested with WordPress 4.5
 
 = 0.4 =
